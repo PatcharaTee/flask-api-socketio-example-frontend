@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Realtime Chat-app</title>
+  </head>
+  <body>
+    <div class="btn">
+      <button *ngIf="!loggedIn" (click)="register()" style="margin-right: auto">
+        Register
+      </button>
+      <button *ngIf="loggedIn" (click)="createRoom()" style="margin-right: 5px">
+        Create room
+      </button>
+      <button
+        *ngIf="loggedIn"
+        (click)="getRoomList()"
+        style="margin-right: auto"
+      >
+        Refresh room list
+      </button>
+      <label style="margin-right: 5px">Username :</label>
+      <input
+        [disabled]="token !== null"
+        type="text"
+        [(ngModel)]="username"
+        placeholder="username"
+        value=""
+      />
+      <label style="margin-left: 30px; margin-right: 5px">Password :</label>
+      <input
+        [disabled]="token !== null"
+        type="password"
+        [(ngModel)]="password"
+        placeholder="password"
+        value=""
+      />
+      <button
+        style="margin-left: 5px"
+        [disabled]="token !== null"
+        (click)="login(username, password)"
+      >
+        Login
+      </button>
+      <button
+        style="margin-left: 5px"
+        [disabled]="token === null"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+    </div>
+    <div *ngIf="!loggedIn" style="display: flex; justify-content: center">
+      <h2>Login to start chat!</h2>
+    </div>
+    <div *ngIf="loggedIn && !selectedRoom">
+      <div style="display: flex; justify-content: center">
+        <div>
+          <div *ngFor="let room of roomList" class="container darker">
+            <button
+              (click)="joinRoom(room['id'])"
+              style="display: flex; justify-content: center"
+            >
+              <p>Name : {{ room["name"] }}</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loggedIn && selectedRoom">
+      <div style="display: flex; justify-content: center">
+        <div>
+          <div *ngFor="let msg of msgList" class="container">
+            <p>{{ msg["name"] }} : {{ msg["msg"] }}</p>
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="msg" style="margin-right: 5px" />
+            <button (click)="sendMessage(msg)" style="margin-right: 5px">
+              Send
+            </button>
+            <button (click)="leaveRoom()" style="margin-right: 5px">
+              Exit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

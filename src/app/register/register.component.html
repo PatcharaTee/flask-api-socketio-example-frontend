@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Register</h1>
+<div mat-dialog-content>
+  <div style="margin-bottom: 10px">
+    <label style="margin-bottom: 2px">Username</label>
+    <input type="text" [(ngModel)]="username" placeholder="username" />
+  </div>
+  <div>
+    <label style="margin-bottom: 2px">Password</label>
+    <input type="password" [(ngModel)]="password" placeholder="password" />
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-button
+    style="margin-right: 5px"
+    [mat-dialog-close]="{ username: '', password: '' }"
+  >
+    Back
+  </button>
+  <button
+    mat-button
+    [mat-dialog-close]="{ username: username, password: password }"
+  >
+    Register
+  </button>
+</div>
